@@ -1,0 +1,26 @@
+---
+# Basic settings
+common_full_upgrade: false
+common_timezone: Asia/Tehran
+# common_hostname: "{{ inventory_hostname }}"
+
+# Essential packages (always installed)
+common_essential_packages:
+  - curl
+  - wget
+  - vim
+  - htop
+  - git
+  - unzip
+  - apt-transport-https
+  - ca-certificates
+  - gnupg
+  - lsb-release
+  - net-tools
+  - dnsutils
+  - tree
+  - jq
+  - ufw
+
+# Additional packages (optional - defined in inventory)
+# common_additional_packages: []
