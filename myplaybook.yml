@@ -1,0 +1,7 @@
+---
+- hosts: virtuals
+  become: true
+  name: "setup nginx"
+  roles:
+    -  role: nginx 
+       tags: setup_nginx

@@ -1,0 +1,5 @@
+[all]
+
+[virtuals]
+localhost ansible_con=localhost
+ubuntu5 ansible_host=10.81.248.135 ansible_user=ali
