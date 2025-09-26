@@ -3,21 +3,18 @@
   apt:
     update_cache: yes
     cache_valid_time: 3600
-  tags: common
 
 - name: Upgrade all packages to the latest version
   apt:
     upgrade: dist
     force_apt_get: yes
   when: common_full_upgrade | bool
-  tags: common
 
 - name: Install essential packages
   apt:
     name: "{{ common_essential_packages }}"
     state: present
     update_cache: yes
-  tags: common
 
 - name: Install additional packages
   apt:
@@ -25,18 +22,15 @@
     state: present
   with_items: "{{ common_additional_packages }}"
   when: common_additional_packages is defined
-  tags: common
 
 - name: Set timezone
   timezone:
     name: "{{ common_timezone }}"
-  tags: common
 
 - name: Configure hostname
   hostname:
     name: "{{ common_hostname }}"
   when: common_hostname is defined
-  tags: common
 
 - name: Update hosts file
   template:
@@ -44,13 +38,11 @@
     dest: /etc/hosts
     backup: yes
   when: common_hostname is defined
-  tags: common
 
 - name: Clean up unused packages
   apt:
     autoremove: yes
     autoclean: yes
-  tags: common
 
 - name: Ensure critical directories exist
   file:
@@ -63,4 +55,3 @@
     - /opt/apps
     - /var/log/application
     - /etc/ssl/certs/custom
-  tags: common

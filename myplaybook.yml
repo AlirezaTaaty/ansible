@@ -1,7 +1,9 @@
 ---
 - hosts: virtuals
   become: true
-  name: "setup nginx"
+  name: "Install tools"
   roles:
-    -  role: nginx 
-       tags: setup_nginx
+#    -  role: nginx 
+#       tags: setup_nginx
+    - role: common
+      tags: common
