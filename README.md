@@ -33,7 +33,7 @@ ansible-server-baseline/
 │   │   ├── handlers/
 │   │   ├── templates/
 │   │   └── defaults/
-├── site.yml                    # Main playbook
+├── myplaybook.yml                    # Main playbook
 ├── ansible.cfg                 # Ansible configuration
 └── README.md                   # This file
 ```
@@ -63,10 +63,6 @@ Docker engine and container management:
 Web server installation and management:
 
 - Nginx installation and configuration
-- Service status monitoring
-- Virtual host setup
-- SSL/TLS configuration readiness
-- Performance tuning
 
 ## ⚙️ Prerequisites
 
@@ -81,52 +77,40 @@ Before using this project, ensure you have:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/ansible-server-baseline.git
-   cd ansible-server-baseline
+   git clone https://github.com/AlirezaTaaty/ansible.git
+   cd ansible
    ```
 
 2. **Configure your inventory:**
    ```bash
-   cp inventories/staging/hosts.example inventories/staging/hosts
+   cp inventory/
    # Edit the hosts file with your server IPs/hostnames
    ```
 
 3. **Run the complete setup:**
    ```bash
-   ansible-playbook -i inventories/staging/hosts site.yml
+   ansible-playbook -i inventory/hosts.txt myplaybook.yml
    ```
 
 ## 🎯 Usage Examples
 
 ### Apply all roles to all servers:
 ```bash
-ansible-playbook -i inventories/production/hosts site.yml
+ansible-playbook -i inventory/hosts.txt myplaybook.yml
 ```
 
 ### Apply specific roles:
 ```bash
 # Only common role
-ansible-playbook -i inventories/production/hosts site.yml --tags "common"
+ansible-playbook -i inventory/hosts.txt myplaybook.yml --tags "common"
 
 # Common and Docker roles
-ansible-playbook -i inventories/production/hosts site.yml --tags "common,docker"
+ansible-playbook -i inventory/hosts.txt myplaybook.yml --tags "common,docker"
 
-# Only Nginx role
-ansible-playbook -i inventories/production/hosts site.yml --tags "nginx"
-```
-
-### Apply to specific server groups:
-```bash
-# Apply to web servers only
-ansible-playbook -i inventories/production/hosts site.yml --limit webservers
-
-# Apply to a single server
-ansible-playbook -i inventories/production/hosts site.yml --limit server1.example.com
-```
 
 ### Dry run (test without changes):
 ```bash
-ansible-playbook -i inventories/production/hosts site.yml --check --diff
+ansible-playbook -i inventory/hosts.txt myplaybook.yml --check --diff
 ```
 
 ## ⚙️ Customization
@@ -155,24 +139,6 @@ nginx_worker_processes: auto
 nginx_worker_connections: 1024
 ```
 
-### Inventory Setup
-Create your inventory files based on environments:
-
-**`inventories/production/hosts`:**
-```ini
-[webservers]
-web1.example.com
-web2.example.com
-
-[docker_servers]
-docker1.example.com
-docker2.example.com
-
-[all:vars]
-ansible_user=ubuntu
-ansible_ssh_private_key_file=~/.ssh/production_key
-```
-
 ## 🔒 Security Notes
 
 - Use Ansible Vault for sensitive data (passwords, API keys)
@@ -183,21 +149,3 @@ ansible_ssh_private_key_file=~/.ssh/production_key
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📞 Support
-
-If you encounter any problems or have questions:
-
-1. Check the [Issues](https://github.com/yourusername/ansible-server-baseline/issues) page
-2. Create a new issue with detailed information
-3. Contact: your-email@example.com
-
----
-
-**⭐ If this project helped you, please give it a star on GitHub!**
-
-*Last updated: March 2024*
