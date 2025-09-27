@@ -1,9 +1,16 @@
 ---
-- hosts: virtuals
-  become: true
-  name: "Install tools"
+- name: Apply common baseline configuration
+  hosts: all
+  become: yes
   roles:
-#    -  role: nginx 
-#       tags: setup_nginx
     - role: common
       tags: common
+
+
+- name: Install and configure Docker
+  hosts: virtuals
+  become: yes
+  roles:
+    - role: docker
+      tags: docker
+

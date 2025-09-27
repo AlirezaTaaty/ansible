@@ -1,0 +1,18 @@
+---
+- name: Stop all running containers
+  docker_container:
+    name: "{{ item }}"
+    state: stopped
+  with_items: "{{ docker_containers_to_stop }}"
+  when: docker_containers_to_stop is defined
+
+- name: Remove all containers
+  docker_container:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ docker_containers_to_remove }}"
+  when: docker_containers_to_remove is defined
+
+- name: Prune system
+  command: docker system prune -f
+  when: docker_prune_system | bool

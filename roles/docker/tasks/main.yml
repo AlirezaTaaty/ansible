@@ -1,0 +1,72 @@
+---
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_distribution }}_{{ ansible_distribution_major_version }}.yml"
+
+- name: Install dependencies
+  apt:
+    name: "{{ docker_dependencies }}"
+    state: present
+    update_cache: yes
+
+- name: Add Docker GPG key
+  apt_key:
+    url: "{{ docker_gpg_key }}"
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "{{ docker_repository }}"
+    state: present
+    update_cache: yes
+
+- name: Install Docker packages
+  apt:
+    name: "{{ docker_packages }}"
+    state: present
+    update_cache: yes
+
+- name: Install Docker Compose
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+  when: docker_install_compose | bool
+
+- name: Create docker daemon.json directory
+  file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+
+#- name: Configure docker daemon
+#  template:
+#    src: daemon.json.j2
+#    dest: /etc/docker/daemon.json
+#    backup: yes
+#  notify: restart docker
+
+- name: Ensure docker service is running and enabled
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: Add users to docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  with_items: "{{ docker_users }}"
+  when: docker_users is defined
+
+- name: Create custom docker networks
+  docker_network:
+    name: "{{ item.name }}"
+    driver: "{{ item.driver | default('bridge') }}"
+    state: present
+  with_items: "{{ docker_custom_networks }}"
+  when: docker_custom_networks is defined
+
+#- name: Include cleanup tasks
+#  include_tasks: cleanup.yml

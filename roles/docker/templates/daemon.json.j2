@@ -1,0 +1,13 @@
+{
+{% for key, value in docker_daemon_config.items() %}
+  "{{ key }}": {% if value is mapping %}
+    {
+    {% for subkey, subvalue in value.items() %}
+      "{{ subkey }}": "{{ subvalue }}"{% if not loop.last %},{% endif %}
+    {% endfor %}
+    }
+  {% else %}
+    "{{ value }}"
+  {% endif %}{% if not loop.last %},{% endif %}
+{% endfor %}
+}
