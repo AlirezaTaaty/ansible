@@ -1,16 +1,16 @@
-Ansible Server Baseline Project
+<h1>Ansible Server Baseline Project</h1>
 A collection of Ansible roles to automate the initial setup and configuration of Ubuntu servers upon first login.
 
-📋 Project Overview
+<h1>📋 Project Overview</h1>
 This Ansible project provides essential baseline configurations for Ubuntu servers, ensuring consistency, security, and proper setup across your infrastructure. The project follows best practices for Ansible role structure and can be easily extended.
-🎯 Purpose
+<h1>🎯 Purpose</h1>
 Automate repetitive server setup tasks including:
 
-Basic system configuration and package management
+* Basic system configuration and package management
 
-Docker installation and container runtime setup
+* Docker installation and container runtime setup
 
-Nginx web server status monitoring and management
+* Nginx web server status monitoring and management
 
 📁 Project Structure
 ansible-baseline/
